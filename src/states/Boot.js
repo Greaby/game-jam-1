@@ -1,5 +1,4 @@
 import Phaser from 'phaser'
-import WebFont from 'webfontloader'
 
 export default class extends Phaser.State {
     init () {
@@ -9,7 +8,6 @@ export default class extends Phaser.State {
     }
 
     preload () {
-
         this.load.tilemap('map', 'assets/map.csv', null, Phaser.Tilemap.CSV)
         this.load.spritesheet('tiles', 'assets/tiles.png', 16, 16)
 
