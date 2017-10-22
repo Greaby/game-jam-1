@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.State {
     init () {
-        this.maxHealth = 1000
+        this.maxHealth = 300
         this.barLength = 300
     }
     preload () {}
