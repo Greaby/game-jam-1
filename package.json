@@ -31,8 +31,6 @@
   },
   "dependencies": {
     "phaser-ce": "^2.8.3",
-    "voronoi": "^1.0.0",
-    "voronoi-map": "0.0.4",
     "webfontloader": "^1.6.28"
   }
 }
