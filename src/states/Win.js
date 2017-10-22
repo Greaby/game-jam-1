@@ -48,6 +48,5 @@ export default class extends Phaser.State {
         this.button.anchor.set(0.5, 0.5)
     }
 
-    update () {
-    }
+    update () {}
 }

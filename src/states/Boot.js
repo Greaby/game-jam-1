@@ -9,10 +9,12 @@ export default class extends Phaser.State {
 
     preload () {
         this.load.tilemap('map', 'assets/map.csv', null, Phaser.Tilemap.CSV)
+        this.load.tilemap('map-coin', 'assets/map-coin.csv', null, Phaser.Tilemap.CSV)
         this.load.spritesheet('tiles', 'assets/tiles.png', 16, 16)
 
         this.load.image('cat-head', 'assets/cat-head.png')
         this.load.image('cat-eye', 'assets/cat-eye.png')
+        this.load.image('heart', 'assets/heart.png')
         this.load.image('cat-heart', 'assets/cat-heart.png')
 
         this.load.image('game-over', 'assets/game-over.png')

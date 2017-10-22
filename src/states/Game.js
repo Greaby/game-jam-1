@@ -16,6 +16,19 @@ export default class extends Phaser.State {
             [39, 81],
             [57, 69]
         ]
+
+        this.coinPositions = [
+            [3, 15],
+            [3, 31],
+            [14, 15],
+            [27, 15],
+            [23, 36],
+            [23, 50],
+            [23, 50],
+            [2, 54],
+            [18, 73],
+            [2, 82]
+        ]
     }
     preload () {}
 
@@ -27,10 +40,17 @@ export default class extends Phaser.State {
         this.layer = this.map.createLayer(0)
         this.layer.resizeWorld()
 
+        this.mapCoin = game.add.tilemap('map-coin', 32, 32)
+        this.mapCoin.addTilesetImage('tiles', null, 32, 32)
+        this.layerCoin = this.mapCoin.createLayer(0)
+
+        this.layerCoin.resizeWorld()
+        this.mapCoin.setCollisionByExclusion([])
+
         this.healthBar = game.add.graphics(game.width - this.barLength - 20, 20)
         this.healthBar.fixedToCamera = true
 
-        // this.layer.debug = true
+        // this.layerCoin.debug = true
 
         this.map.setCollisionByExclusion([0, 1, 2, 3, 4, 21])
 
@@ -63,7 +83,7 @@ export default class extends Phaser.State {
 
             guard.emitter = game.add.emitter(0, 0, 100)
 
-            guard.emitter.makeParticles('cat-heart')
+            guard.emitter.makeParticles('heart')
             guard.emitter.gravity = -200
 
             this.guards.add(guard)
@@ -89,6 +109,13 @@ export default class extends Phaser.State {
         }, this); */
 
         game.physics.arcade.collide(this.player, this.layer)
+        game.physics.arcade.collide(this.player, this.layerCoin, function (player, coin) {
+            this.mapCoin.removeTile(coin.x, coin.y, this.layerCoin).destroy()
+            let coinsLeft = this.layerCoin.getTiles(0, 0, 3200, 3200, true)
+            if (coinsLeft.length <= 0) {
+                this.state.start('Win')
+            }
+        }, null, this)
 
         if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
             this.player.body.velocity.x = -this.SPEED
@@ -112,6 +139,7 @@ export default class extends Phaser.State {
             game.physics.arcade.collide(guard, this.layer, function (guard) {
                 guard.angle = this.getAngle()
             }, null, this)
+
             game.physics.arcade.velocityFromAngle(guard.angle, guard.speed, guard.body.velocity)
             guard.line = new Phaser.Line(guard.x, guard.y, this.player.x, this.player.y)
 
